@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { environment } from '../environments/environment';
 
@@ -27,15 +27,14 @@ interface Manga {
 export class App {
   private http = inject(HttpClient);
 
-  mangas$: Observable<Manga[]> = fetchManga(this.http);
+  favorites$: Observable<Manga[]> = fetchFavorites(this.http);
+  recents$: Observable<Manga[]> = fetchRecents(this.http);
 }
 
-function fetchManga(http: HttpClient): Observable<Manga[]> {
-  return http.get<Manga[]>(`${environment.apiUrl}/mangas`).pipe(
-    map(mangas =>
-      [...mangas].sort(
-        (a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-      ).slice(0, 4)
-    )
-  )
+function fetchFavorites(http: HttpClient): Observable<Manga[]> {
+  return http.get<Manga[]>(`${environment.apiUrl}/favorites`);
+}
+
+function fetchRecents(http: HttpClient): Observable<Manga[]> {
+  return http.get<Manga[]>(`${environment.apiUrl}/recents`);
 }
