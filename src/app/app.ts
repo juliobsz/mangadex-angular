@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import {map, Observable, toArray} from 'rxjs';
-import {AsyncPipe, NgOptimizedImage} from '@angular/common';
+import { map, Observable } from 'rxjs';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { environment } from '../environments/environment';
 
 interface Manga {
